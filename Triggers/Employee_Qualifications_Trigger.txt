@@ -1,0 +1,87 @@
+DELIMITER $$
+CREATE TRIGGER triggereducationdetails
+    AFTER UPDATE ON employee_qualifications
+    FOR EACH ROW
+BEGIN
+
+IF (((NEW.course_name <> OLD.course_name)
+OR (NEW.course_name IS NOT NULL AND OLD.course_name IS NULL)
+OR (NEW.course_name IS NULL AND  OLD.course_name IS NOT NULL))
+and (old.course_name is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.qualifications_id,
+(select employee_id from employee_qualifications where qualifications_id=old.qualifications_id),
+'Qualifications : Course Name',old.course_name,new.course_name,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.specialization <> OLD.specialization)
+OR (NEW.specialization IS NOT NULL AND OLD.specialization IS NULL)
+OR (NEW.specialization IS NULL AND  OLD.specialization IS NOT NULL))
+and (old.specialization is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.qualifications_id,
+(select employee_id from employee_qualifications where qualifications_id=old.qualifications_id),
+'Qualifications : Specialization',old.specialization,new.specialization,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.institution <> OLD.institution)
+OR (NEW.institution IS NOT NULL AND OLD.institution IS NULL)
+OR (NEW.institution IS NULL AND  OLD.institution IS NOT NULL))
+and (old.institution is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.qualifications_id,
+(select employee_id from employee_qualifications where qualifications_id=old.qualifications_id),
+'Qualifications : Institution',old.institution,new.institution,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.from_year <> OLD.from_year)
+OR (NEW.from_year IS NOT NULL AND OLD.from_year IS NULL)
+OR (NEW.from_year IS NULL AND  OLD.from_year IS NOT NULL))
+and (old.from_year is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.qualifications_id,
+(select employee_id from employee_qualifications where qualifications_id=old.qualifications_id),
+'Qualifications : From',old.from_year,new.from_year,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.to_year <> OLD.to_year)
+OR (NEW.to_year IS NOT NULL AND OLD.to_year IS NULL)
+OR (NEW.to_year IS NULL AND  OLD.to_year IS NOT NULL))
+and (old.to_year is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.qualifications_id,
+(select employee_id from employee_qualifications where qualifications_id=old.qualifications_id),
+'Qualifications : To',old.to_year,new.to_year,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+END $$;
+
+
+

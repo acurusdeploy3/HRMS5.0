@@ -1,0 +1,150 @@
+DELIMITER $$
+CREATE TRIGGER triggerResourcedetails
+    AFTER UPDATE ON resource_management_table
+    FOR EACH ROW
+BEGIN
+
+IF (((NEW.department <> OLD.department)
+OR (NEW.department IS NOT NULL AND OLD.department IS NULL)
+OR (NEW.department IS NULL AND  OLD.department IS NOT NULL))
+and (old.department is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Department',old.department,new.department,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.designation <> OLD.designation)
+OR (NEW.designation IS NOT NULL AND OLD.designation IS NULL)
+OR (NEW.designation IS NULL AND  OLD.designation IS NOT NULL))
+and (old.designation is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Designation',old.designation,new.designation,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.reporting_manager <> OLD.reporting_manager)
+OR (NEW.reporting_manager IS NOT NULL AND OLD.reporting_manager IS NULL)
+OR (NEW.reporting_manager IS NULL AND  OLD.reporting_manager IS NOT NULL))
+and (old.reporting_manager is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Reporting Manager',old.reporting_manager,new.reporting_manager,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.reporting_manager <> OLD.reporting_manager)
+OR (NEW.reporting_manager IS NOT NULL AND OLD.reporting_manager IS NULL)
+OR (NEW.reporting_manager IS NULL AND  OLD.reporting_manager IS NOT NULL))
+and (old.reporting_manager is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Reporting Manager',old.reporting_manager,new.reporting_manager,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.is_active <> OLD.is_active)
+OR (NEW.is_active IS NOT NULL AND OLD.is_active IS NULL)
+OR (NEW.is_active IS NULL AND  OLD.is_active IS NOT NULL))
+and (old.is_active is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Active',old.is_active,new.is_active,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.band <> OLD.band)
+OR (NEW.band IS NOT NULL AND OLD.band IS NULL)
+OR (NEW.band IS NULL AND  OLD.band IS NOT NULL))
+and (old.band is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Band',old.band,new.band,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.level <> OLD.level)
+OR (NEW.level IS NOT NULL AND OLD.level IS NULL)
+OR (NEW.level IS NULL AND  OLD.level IS NOT NULL))
+and (old.level is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Level',old.level,new.level,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.signed_loa_doc <> OLD.signed_loa_doc)
+OR (NEW.signed_loa_doc IS NOT NULL AND OLD.signed_loa_doc IS NULL)
+OR (NEW.signed_loa_doc IS NULL AND  OLD.signed_loa_doc IS NOT NULL))
+and (old.signed_loa_doc is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Office Order DOC ID',old.signed_loa_doc,new.signed_loa_doc,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.effective_from <> OLD.effective_from)
+OR (NEW.effective_from IS NOT NULL AND OLD.effective_from IS NULL)
+OR (NEW.effective_from IS NULL AND  OLD.effective_from IS NOT NULL))
+and (old.effective_from is not null))
+Then
+Insert into audit values
+(0,'Resource Management',old.res_management_id,
+(select employee_id from resource_management_table where res_management_id=old.res_management_id),
+'Effective From',old.effective_from,new.effective_from,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+END $$;
+
+
+

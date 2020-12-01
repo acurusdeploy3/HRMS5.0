@@ -1,0 +1,117 @@
+body {
+font-family:Arial;
+}
+input {
+font-family:Arial;
+font-size:14px;
+padding: 5px;
+border:#fedc4d 1px solid;
+border-radius:4px;
+}
+label{
+font-family:Arial;
+font-size:14px;
+color:#999999;
+}
+.tblSaveForm {
+border-top:2px #e0dcdc solid;
+background-color: #f8f8f8;
+}
+
+.tableheader {
+background-color: #e8d47d;
+}
+
+.tableheader1 {
+background-color: #f8f8f8;
+}
+.tablerow {
+background-color: #A7D6F1;
+color:white;
+}
+.btnSubmit {
+background-color:#e8d47d;
+padding:5px;
+border-color:#cabb6f;
+border-radius:4px;
+color:white;
+}
+.message {
+color: #FF0000;
+text-align: center;
+width: 100%;
+}
+.txtField {
+padding: 5px;
+border:#fedc4d 1px solid;
+border-radius:4px;
+}
+
+.evenRow {
+background-color: #E2EDF9;
+font-size:12px;
+color:#101010;
+}
+.evenRow:hover {
+background-color: #ffef46;
+}
+.oddRow {
+background-color: #B3E8FF;
+font-size:12px;
+color:#101010;
+}
+.oddRow:hover {
+background-color: #ffef46;
+}
+.tblListForm {
+ border-top:2px #e0dcdc solid;
+}
+.listheader {
+background-color: #fedc4d;
+font-size:12px;
+font-weight:bold;
+}
+.listresult {
+background-color: #E1F8FE;
+font-size:12px;
+}
+.link{
+text-decoration:none;
+color:#5e8fc7;
+/*font-size:11px;*/
+}
+div.tab {
+    overflow: hidden;
+    border: 1px solid #EBEDEF;
+    background-color: #EBEDEF;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #1cb989;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}

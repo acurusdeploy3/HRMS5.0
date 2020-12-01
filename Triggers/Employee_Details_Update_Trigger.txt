@@ -1,0 +1,630 @@
+DELIMITER $$
+CREATE TRIGGER triggeremployeedetails
+    AFTER UPDATE ON employee_details
+    FOR EACH ROW
+BEGIN
+
+IF (((NEW.employee_personal_email <> OLD.employee_personal_email)
+OR (NEW.employee_personal_email IS NOT NULL AND OLD.employee_personal_email IS NULL)
+OR (NEW.employee_personal_email IS NULL AND  OLD.employee_personal_email IS NOT NULL))
+and (old.employee_personal_email is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Personal Email Change',old.employee_personal_email,new.employee_personal_email,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF (((NEW.primary_mobile_number <> OLD.primary_mobile_number)
+OR (NEW.primary_mobile_number IS NOT NULL AND OLD.primary_mobile_number IS NULL)
+OR (NEW.primary_mobile_number IS NULL AND  OLD.primary_mobile_number IS NOT NULL))
+and (old.primary_mobile_number is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Primary Mobile Number',old.primary_mobile_number,new.primary_mobile_number,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF (((NEW.employee_blood_group <> OLD.employee_blood_group)
+OR (NEW.employee_blood_group IS NOT NULL AND OLD.employee_blood_group IS NULL)
+OR (NEW.employee_blood_group IS NULL AND  OLD.employee_blood_group IS NOT NULL))
+and (old.employee_blood_group is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Blood Group',old.employee_blood_group,new.employee_blood_group,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.permanent_address_line_1 <> OLD.permanent_address_line_1)
+OR (NEW.permanent_address_line_1 IS NOT NULL AND OLD.permanent_address_line_1 IS NULL)
+OR (NEW.permanent_address_line_1 IS NULL AND  OLD.permanent_address_line_1 IS NOT NULL))
+and (old.permanent_address_line_1 is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Permanent Address',old.permanent_address_line_1,new.permanent_address_line_1,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.present_address_line_1 <> OLD.present_address_line_1)
+OR (NEW.present_address_line_1 IS NOT NULL AND OLD.present_address_line_1 IS NULL)
+OR (NEW.present_address_line_1 IS NULL AND  OLD.present_address_line_1 IS NOT NULL))
+and (old.present_address_line_1 is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Present Address',old.present_address_line_1,new.present_address_line_1,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.permanent_address_line_2 <> OLD.permanent_address_line_2)
+OR (NEW.permanent_address_line_2 IS NOT NULL AND OLD.permanent_address_line_2 IS NULL)
+OR (NEW.permanent_address_line_2 IS NULL AND  OLD.permanent_address_line_2 IS NOT NULL))
+and (old.permanent_address_line_2 is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Permanent Address',old.permanent_address_line_2,new.permanent_address_line_2,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+IF (((NEW.present_address_line_2 <> OLD.present_address_line_2)
+OR (NEW.present_address_line_2 IS NOT NULL AND OLD.present_address_line_2 IS NULL)
+OR (NEW.present_address_line_2 IS NULL AND  OLD.present_address_line_2 IS NOT NULL))
+and (old.present_address_line_2 is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Present Address',old.present_address_line_2,new.present_address_line_2,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+
+
+IF (((NEW.permanent_country <> OLD.permanent_country)
+OR (NEW.permanent_country IS NOT NULL AND OLD.permanent_country IS NULL)
+OR (NEW.permanent_country IS NULL AND  OLD.permanent_country IS NOT NULL))
+and (old.permanent_country is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Permanent Country',old.permanent_country,new.permanent_country,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.present_country <> OLD.present_country)
+OR (NEW.present_country IS NOT NULL AND OLD.present_country IS NULL)
+OR (NEW.present_country IS NULL AND  OLD.present_country IS NOT NULL))
+and (old.present_country is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Present Country',old.present_country,new.present_country,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+
+
+IF (((NEW.permanent_state <> OLD.permanent_state)
+OR (NEW.permanent_state IS NOT NULL AND OLD.permanent_state IS NULL)
+OR (NEW.permanent_state IS NULL AND  OLD.permanent_state IS NOT NULL))
+and (old.permanent_state is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Permanent State',old.permanent_state,new.permanent_state,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.present_state <> OLD.present_state)
+OR (NEW.present_state IS NOT NULL AND OLD.present_state IS NULL)
+OR (NEW.present_state IS NULL AND  OLD.present_state IS NOT NULL))
+and (old.present_state is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Present State',old.present_state,new.present_state,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+
+IF (((NEW.permanent_city <> OLD.permanent_city)
+OR (NEW.permanent_city IS NOT NULL AND OLD.permanent_city IS NULL)
+OR (NEW.permanent_city IS NULL AND  OLD.permanent_city IS NOT NULL))
+and (old.permanent_city is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Permanent City',old.permanent_city,new.permanent_city,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+IF (((NEW.present_city <> OLD.present_city)
+OR (NEW.present_city IS NOT NULL AND OLD.present_city IS NULL)
+OR (NEW.present_city IS NULL AND  OLD.present_city IS NOT NULL))
+and (old.present_city is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Present City',old.present_city,new.present_city,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+
+IF (((NEW.permanent_address_zip <> OLD.permanent_address_zip)
+OR (NEW.permanent_address_zip IS NOT NULL AND OLD.permanent_address_zip IS NULL)
+OR (NEW.permanent_address_zip IS NULL AND  OLD.permanent_address_zip IS NOT NULL))
+and (old.permanent_address_zip is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Permanent Address Zip Code',old.permanent_address_zip,new.permanent_address_zip,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.present_address_zipcode <> OLD.present_address_zipcode)
+OR (NEW.present_address_zipcode IS NOT NULL AND OLD.present_address_zipcode IS NULL)
+OR (NEW.present_address_zipcode IS NULL AND  OLD.present_address_zipcode IS NOT NULL))
+and (old.present_address_zipcode is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.id,
+(select employee_id from employee_details where id=old.id),
+'Present Address Zip Code',old.present_address_zipcode,new.present_address_zipcode,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.workstation <> OLD.workstation)
+OR (NEW.workstation IS NOT NULL AND OLD.workstation IS NULL)
+OR (NEW.workstation IS NULL AND  OLD.workstation IS NOT NULL))
+and (old.workstation is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding :Workstation',old.workstation,new.workstation,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.official_email <> OLD.official_email)
+OR (NEW.official_email IS NOT NULL AND OLD.official_email IS NULL)
+OR (NEW.official_email IS NULL AND  OLD.official_email IS NOT NULL))
+and (old.official_email is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding :Official Email',old.official_email,new.official_email,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.reporting_manager_id <> OLD.reporting_manager_id)
+OR (NEW.reporting_manager_id IS NOT NULL AND OLD.reporting_manager_id IS NULL)
+OR (NEW.reporting_manager_id IS NULL AND  OLD.reporting_manager_id IS NOT NULL))
+and (old.reporting_manager_id is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Reporting Manager',old.reporting_manager_id,new.reporting_manager_id,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.department <> OLD.department)
+OR (NEW.department IS NOT NULL AND OLD.department IS NULL)
+OR (NEW.department IS NULL AND  OLD.department IS NOT NULL))
+and (old.department is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Department',old.department,new.department,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.mentor_id <> OLD.mentor_id)
+OR (NEW.mentor_id IS NOT NULL AND OLD.mentor_id IS NULL)
+OR (NEW.mentor_id IS NULL AND  OLD.mentor_id IS NOT NULL))
+and (old.mentor_id is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Mentor',old.mentor_id,new.mentor_id,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.employee_designation <> OLD.employee_designation)
+OR (NEW.employee_designation IS NOT NULL AND OLD.employee_designation IS NULL)
+OR (NEW.employee_designation IS NULL AND  OLD.employee_designation IS NOT NULL))
+and (old.employee_designation is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Designation',old.employee_designation,new.employee_designation,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.business_unit <> OLD.business_unit)
+OR (NEW.business_unit IS NOT NULL AND OLD.business_unit IS NULL)
+OR (NEW.business_unit IS NULL AND  OLD.business_unit IS NOT NULL))
+and (old.business_unit is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Business Unit',old.business_unit,new.business_unit,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.pf_number <> OLD.pf_number)
+OR (NEW.pf_number IS NOT NULL AND OLD.pf_number IS NULL)
+OR (NEW.pf_number IS NULL AND  OLD.pf_number IS NOT NULL))
+and (old.pf_number is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : PF Number',old.pf_number,new.pf_number,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.esic_number <> OLD.esic_number)
+OR (NEW.esic_number IS NOT NULL AND OLD.esic_number IS NULL)
+OR (NEW.esic_number IS NULL AND  OLD.esic_number IS NOT NULL))
+and (old.esic_number is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : ESIC Number',old.esic_number,new.esic_number,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+IF (((NEW.dispensary <> OLD.dispensary)
+OR (NEW.dispensary IS NOT NULL AND OLD.dispensary IS NULL)
+OR (NEW.dispensary IS NULL AND  OLD.dispensary IS NOT NULL))
+and (old.dispensary is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Dispensary',old.dispensary,new.dispensary,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.local_office <> OLD.local_office)
+OR (NEW.local_office IS NOT NULL AND OLD.local_office IS NULL)
+OR (NEW.local_office IS NULL AND  OLD.local_office IS NOT NULL))
+and (old.local_office is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Local Office',old.local_office,new.local_office,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.salary_payment_mode <> OLD.salary_payment_mode)
+OR (NEW.salary_payment_mode IS NOT NULL AND OLD.salary_payment_mode IS NULL)
+OR (NEW.salary_payment_mode IS NULL AND  OLD.salary_payment_mode IS NOT NULL))
+and (old.salary_payment_mode is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Salary Payment Mode',old.salary_payment_mode,new.salary_payment_mode,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.bank_name <> OLD.bank_name)
+OR (NEW.bank_name IS NOT NULL AND OLD.bank_name IS NULL)
+OR (NEW.bank_name IS NULL AND  OLD.bank_name IS NOT NULL))
+and (old.bank_name is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Bank',old.bank_name,new.bank_name,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+IF (((NEW.account_number <> OLD.account_number)
+OR (NEW.account_number IS NOT NULL AND OLD.account_number IS NULL)
+OR (NEW.account_number IS NULL AND  OLD.account_number IS NOT NULL))
+and (old.account_number is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Account Number',old.account_number,new.account_number,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.branch <> OLD.branch)
+OR (NEW.branch IS NOT NULL AND OLD.branch IS NULL)
+OR (NEW.branch IS NULL AND  OLD.branch IS NOT NULL))
+and (old.branch is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Branch',old.branch,new.branch,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+IF (((NEW.ifsc_code <> OLD.ifsc_code)
+OR (NEW.ifsc_code IS NOT NULL AND OLD.ifsc_code IS NULL)
+OR (NEW.ifsc_code IS NULL AND  OLD.ifsc_code IS NOT NULL))
+and (old.ifsc_code is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : IFSC Code',old.ifsc_code,new.ifsc_code,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+IF (((NEW.date_of_assessment <> OLD.date_of_assessment)
+OR (NEW.date_of_assessment IS NOT NULL AND OLD.date_of_assessment IS NULL)
+OR (NEW.date_of_assessment IS NULL AND  OLD.date_of_assessment IS NOT NULL))
+and (old.date_of_assessment is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Assessment Date',old.date_of_assessment,new.date_of_assessment,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.conducted_by <> OLD.conducted_by)
+OR (NEW.conducted_by IS NOT NULL AND OLD.conducted_by IS NULL)
+OR (NEW.conducted_by IS NULL AND  OLD.conducted_by IS NOT NULL))
+and (old.conducted_by is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Conducted By',old.conducted_by,new.conducted_by,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.marks_obtained <> OLD.marks_obtained)
+OR (NEW.marks_obtained IS NOT NULL AND OLD.marks_obtained IS NULL)
+OR (NEW.marks_obtained IS NULL AND  OLD.marks_obtained IS NOT NULL))
+and (old.marks_obtained is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Marks Scored',old.marks_obtained,new.marks_obtained,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.max_score <> OLD.max_score)
+OR (NEW.max_score IS NOT NULL AND OLD.max_score IS NULL)
+OR (NEW.max_score IS NULL AND  OLD.max_score IS NOT NULL))
+and (old.max_score is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Maximum Score',old.max_score,new.max_score,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.typing_speed <> OLD.typing_speed)
+OR (NEW.typing_speed IS NOT NULL AND OLD.typing_speed IS NULL)
+OR (NEW.typing_speed IS NULL AND  OLD.typing_speed IS NOT NULL))
+and (old.typing_speed is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Typing Speed',old.typing_speed,new.typing_speed,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+
+IF (((NEW.typing_accuracy <> OLD.typing_accuracy)
+OR (NEW.typing_accuracy IS NOT NULL AND OLD.typing_accuracy IS NULL)
+OR (NEW.typing_accuracy IS NULL AND  OLD.typing_accuracy IS NOT NULL))
+and (old.typing_accuracy is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_details where id=old.id),
+'Employee Boarding : Typing Accuracy',old.typing_accuracy,new.typing_accuracy,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+END $$;
+
+
+

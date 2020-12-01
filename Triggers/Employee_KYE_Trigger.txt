@@ -1,0 +1,99 @@
+DELIMITER $$
+CREATE TRIGGER triggerKYEdetails
+    AFTER UPDATE ON kye_details
+    FOR EACH ROW
+BEGIN
+
+IF (((NEW.document_type <> OLD.document_type)
+OR (NEW.document_type IS NOT NULL AND OLD.document_type IS NULL)
+OR (NEW.document_type IS NULL AND  OLD.document_type IS NOT NULL))
+and (old.document_type is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.kye_id,
+(select employee_id from kye_details where kye_id=old.kye_id),
+'KYE Details :Document Type',old.document_type,new.document_type,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.document_number <> OLD.document_number)
+OR (NEW.document_number IS NOT NULL AND OLD.document_number IS NULL)
+OR (NEW.document_number IS NULL AND  OLD.document_number IS NOT NULL))
+and (old.document_number is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.kye_id,
+(select employee_id from kye_details where kye_id=old.kye_id),
+'KYE Details :Document Number',old.document_number,new.document_number,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.has_Expiry <> OLD.has_Expiry)
+OR (NEW.has_Expiry IS NOT NULL AND OLD.has_Expiry IS NULL)
+OR (NEW.has_Expiry IS NULL AND  OLD.has_Expiry IS NOT NULL))
+and (old.has_Expiry is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.kye_id,
+(select employee_id from kye_details where kye_id=old.kye_id),
+'KYE Details :Has Expiry',old.has_Expiry,new.has_Expiry,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.valid_from <> OLD.valid_from)
+OR (NEW.valid_from IS NOT NULL AND OLD.valid_from IS NULL)
+OR (NEW.valid_from IS NULL AND  OLD.valid_from IS NOT NULL))
+and (old.valid_from is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.kye_id,
+(select employee_id from kye_details where kye_id=old.kye_id),
+'KYE Details :Valid From',old.valid_from,new.valid_from,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.valid_to <> OLD.valid_to)
+OR (NEW.valid_to IS NOT NULL AND OLD.valid_to IS NULL)
+OR (NEW.valid_to IS NULL AND  OLD.valid_to IS NOT NULL))
+and (old.valid_to is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.kye_id,
+(select employee_id from kye_details where kye_id=old.kye_id),
+'KYE Details :Valid To',old.valid_to,new.valid_to,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.doc_id <> OLD.doc_id)
+OR (NEW.doc_id IS NOT NULL AND OLD.doc_id IS NULL)
+OR (NEW.doc_id IS NULL AND  OLD.doc_id IS NOT NULL))
+and (old.doc_id is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.kye_id,
+(select employee_id from kye_details where kye_id=old.kye_id),
+'KYE Details :Doc ID',old.doc_id,new.doc_id,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+END $$;
+
+
+

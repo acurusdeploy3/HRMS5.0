@@ -1,0 +1,240 @@
+DELIMITER $$
+CREATE TRIGGER triggerBoardingdetails
+    AFTER UPDATE ON employee_boarding
+    FOR EACH ROW
+BEGIN
+
+IF (((NEW.date_of_joining <> OLD.date_of_joining)
+OR (NEW.date_of_joining IS NOT NULL AND OLD.date_of_joining IS NULL)
+OR (NEW.date_of_joining IS NULL AND  OLD.date_of_joining IS NOT NULL))
+and (old.date_of_joining is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Date of Joining',old.date_of_joining,new.date_of_joining,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.is_reported <> OLD.is_reported)
+OR (NEW.is_reported IS NOT NULL AND OLD.is_reported IS NULL)
+OR (NEW.is_reported IS NULL AND  OLD.is_reported IS NOT NULL))
+and (old.is_reported is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Has Reported',old.is_reported,new.is_reported,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.is_doj_modified <> OLD.is_doj_modified)
+OR (NEW.is_doj_modified IS NOT NULL AND OLD.is_doj_modified IS NULL)
+OR (NEW.is_doj_modified IS NULL AND  OLD.is_doj_modified IS NOT NULL))
+and (old.is_doj_modified is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Is DOJ Modified',old.is_doj_modified,new.is_doj_modified,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.modified_doj <> OLD.modified_doj)
+OR (NEW.modified_doj IS NOT NULL AND OLD.modified_doj IS NULL)
+OR (NEW.modified_doj IS NULL AND  OLD.modified_doj IS NOT NULL))
+and (old.modified_doj is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Modified DOJ',old.modified_doj,new.modified_doj,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.is_aeds_filled <> OLD.is_aeds_filled)
+OR (NEW.is_aeds_filled IS NOT NULL AND OLD.is_aeds_filled IS NULL)
+OR (NEW.is_aeds_filled IS NULL AND  OLD.is_aeds_filled IS NOT NULL))
+and (old.is_aeds_filled is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Is AEDS Filled',old.is_aeds_filled,new.is_aeds_filled,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF (((NEW.is_formalities_completed <> OLD.is_formalities_completed)
+OR (NEW.is_formalities_completed IS NOT NULL AND OLD.is_formalities_completed IS NULL)
+OR (NEW.is_formalities_completed IS NULL AND  OLD.is_formalities_completed IS NOT NULL))
+and (old.is_formalities_completed is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Is Formalities Completed',old.is_formalities_completed,new.is_formalities_completed,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.is_biometric_authorized <> OLD.is_biometric_authorized)
+OR (NEW.is_biometric_authorized IS NOT NULL AND OLD.is_biometric_authorized IS NULL)
+OR (NEW.is_biometric_authorized IS NULL AND  OLD.is_biometric_authorized IS NOT NULL))
+and (old.is_biometric_authorized is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Is Biometric Authorized',old.is_biometric_authorized,new.is_biometric_authorized,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.is_id_issued <> OLD.is_id_issued)
+OR (NEW.is_id_issued IS NOT NULL AND OLD.is_id_issued IS NULL)
+OR (NEW.is_id_issued IS NULL AND  OLD.is_id_issued IS NOT NULL))
+and (old.is_id_issued is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Is ID Card Issued',old.is_id_issued,new.is_id_issued,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.is_login_created <> OLD.is_login_created)
+OR (NEW.is_login_created IS NOT NULL AND OLD.is_login_created IS NULL)
+OR (NEW.is_login_created IS NULL AND  OLD.is_login_created IS NOT NULL))
+and (old.is_login_created is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Is Login Created',old.is_login_created,new.is_login_created,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.are_documents_uploaded <> OLD.are_documents_uploaded)
+OR (NEW.are_documents_uploaded IS NOT NULL AND OLD.are_documents_uploaded IS NULL)
+OR (NEW.are_documents_uploaded IS NULL AND  OLD.are_documents_uploaded IS NOT NULL))
+and (old.are_documents_uploaded is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Are Documents Uploaded',old.are_documents_uploaded,new.are_documents_uploaded,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.is_system_allocated <> OLD.is_system_allocated)
+OR (NEW.is_system_allocated IS NOT NULL AND OLD.is_system_allocated IS NULL)
+OR (NEW.is_system_allocated IS NULL AND  OLD.is_system_allocated IS NOT NULL))
+and (old.is_system_allocated is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Is System Allocated',old.is_system_allocated,new.is_system_allocated,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.is_provisions_completed <> OLD.is_provisions_completed)
+OR (NEW.is_provisions_completed IS NOT NULL AND OLD.is_provisions_completed IS NULL)
+OR (NEW.is_provisions_completed IS NULL AND  OLD.is_provisions_completed IS NOT NULL))
+and (old.is_provisions_completed is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Is Provisions Completed',old.is_provisions_completed,new.is_provisions_completed,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.is_designated <> OLD.is_designated)
+OR (NEW.is_designated IS NOT NULL AND OLD.is_designated IS NULL)
+OR (NEW.is_designated IS NULL AND  OLD.is_designated IS NOT NULL))
+and (old.is_designated is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Official Data Completed',old.is_designated,new.is_designated,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.attendance_required <> OLD.attendance_required)
+OR (NEW.attendance_required IS NOT NULL AND OLD.attendance_required IS NULL)
+OR (NEW.attendance_required IS NULL AND  OLD.attendance_required IS NOT NULL))
+and (old.attendance_required is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Attendance Portal Required',old.attendance_required,new.attendance_required,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.is_data_sheet_completed <> OLD.is_data_sheet_completed)
+OR (NEW.is_data_sheet_completed IS NOT NULL AND OLD.is_data_sheet_completed IS NULL)
+OR (NEW.is_data_sheet_completed IS NULL AND  OLD.is_data_sheet_completed IS NOT NULL))
+and (old.is_data_sheet_completed is not null))
+Then
+Insert into audit values
+(0,'Employee Boarding',old.id,
+(select employee_id from employee_boarding where id=old.id),
+'Data Sheet Completed',old.is_data_sheet_completed,new.is_data_sheet_completed,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+END $$;
+
+
+

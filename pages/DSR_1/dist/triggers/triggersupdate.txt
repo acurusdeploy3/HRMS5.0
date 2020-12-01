@@ -1,0 +1,112 @@
+DELIMITER $$
+CREATE TRIGGER triggerresignationupdate
+    BEFORE UPDATE ON employee_resignation_information
+    FOR EACH ROW
+
+BEGIN
+IF(NEW.process_queue <> OLD.process_queue)
+OR(NEW.process_queue is not null and OLD.proceSs_queue is null)
+OR(NEW.process_queue is null and OLD.process_queue is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'Process_Queue_Change',old.process_queue,new.process_queue,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.status <> OLD.status)
+OR(NEW.status is not null and OLD.status is null)
+OR(NEW.status is null and OLD.status is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'Resignation_Status_Change',old.status,new.status,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.is_active <> OLD.is_active)
+OR(NEW.is_active is not null and OLD.is_active is null)
+OR(NEW.is_active is null and OLD.is_active is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'Active_Status',old.is_active,new.is_active,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.Date_Of_Leaving <> OLD.Date_Of_Leaving)
+OR(NEW.Date_Of_Leaving is not null and OLD.Date_Of_Leaving is null)
+OR(NEW.Date_Of_Leaving is null and OLD.Date_Of_Leaving is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'Date_Of_Leaving',old.Date_Of_Leaving,new.Date_Of_Leaving,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.reporting_manager_comments <> OLD.reporting_manager_comments)
+OR(NEW.reporting_manager_comments is not null and OLD.reporting_manager_comments is null)
+OR(NEW.reporting_manager_comments is null and OLD.reporting_manager_comments is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'Reporting Manager Comments',old.reporting_manager_comments,new.reporting_manager_comments,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.hr_reason_update <> OLD.hr_reason_update)
+OR(NEW.hr_reason_update is not null and OLD.hr_reason_update is null)
+OR(NEW.hr_reason_update is null and OLD.hr_reason_update is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'HR Reasons',old.hr_reason_update,new.hr_reason_update,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.hr_comments <> OLD.hr_comments)
+OR(NEW.hr_comments is not null and OLD.hr_comments is null)
+OR(NEW.hr_comments is null and OLD.hr_comments is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'HR Comments',old.hr_comments,new.hr_comments,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.no_due_sysadmin_allocated_to <> OLD.no_due_sysadmin_allocated_to)
+OR(NEW.no_due_sysadmin_allocated_to is not null and OLD.no_due_sysadmin_allocated_to is null)
+OR(NEW.no_due_sysadmin_allocated_to is null and OLD.no_due_sysadmin_allocated_to is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'System Admin Allocation',old.no_due_sysadmin_allocated_to,new.no_due_sysadmin_allocated_to,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.no_due_acc_allocated_to <> OLD.no_due_acc_allocated_to)
+OR(NEW.no_due_acc_allocated_to is not null and OLD.no_due_acc_allocated_to is null)
+OR(NEW.no_due_acc_allocated_to is null and OLD.no_due_acc_allocated_to is not null)
+Then
+Insert into audit values (0,'Resignation Management',old.resignation_id,old.employee_id,'Accounts Allocation',old.no_due_acc_allocated_to,new.no_due_acc_allocated_to,new.modified_by,
+now(),'update',( Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+IF(NEW.status <> OLD.status)
+OR(NEW.status is not null and OLD.status is null)
+OR(NEW.status is null and OLD.status is not null)
+Then
+Insert into fyi_transaction
+Select 0,old.employee_id,
+(select concat(First_name,' ',Last_Name) as name from employee_details d where d.employee_id=old.employee_id),
+concat(New.status,' - ',New.process_queue),old.resignation_id,'Resignation Management',
+if(NEW.status='Cancel Resignation','Date of Cancellation',if(old.process_queue='HR_Manager_Process','Date of Leaving','Date of Submission of Resignation')),
+if(NEW.status='Cancel Resignation',date(old.date_of_cancellation_of_resignation),if(old.process_queue='HR_Manager_Process',date(old.date_of_leaving),date(old.date_of_submission_of_resignation))) as date,
+if(NEW.status='Resignation Request Sent',datediff(date(now()),date(old.created_date_and_time)),datediff(date(now()),date(old.modified_date_and_time))) as days,
+'Y',now(),'Acurus';
+
+END IF;
+
+END $$;

@@ -1,0 +1,102 @@
+DELIMITER $$
+CREATE TRIGGER triggerworkdetails
+    AFTER UPDATE ON employee_work_history
+    FOR EACH ROW
+BEGIN
+
+IF (((NEW.company_name <> OLD.company_name)
+OR (NEW.company_name IS NOT NULL AND OLD.company_name IS NULL)
+OR (NEW.company_name IS NULL AND  OLD.company_name IS NOT NULL))
+and (old.company_name is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.work_id,
+(select employee_id from employee_details where work_id=old.work_id),
+'Work History : Company Name',old.company_name,new.company_name,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+
+IF (((NEW.designation <> OLD.designation)
+OR (NEW.designation IS NOT NULL AND OLD.designation IS NULL)
+OR (NEW.designation IS NULL AND  OLD.designation IS NOT NULL))
+and (old.designation is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.work_id,
+(select employee_id from employee_details where work_id=old.work_id),
+'Work History : Designation',old.designation,new.designation,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.is_previous_company <> OLD.is_previous_company)
+OR (NEW.is_previous_company IS NOT NULL AND OLD.is_previous_company IS NULL)
+OR (NEW.is_previous_company IS NULL AND  OLD.is_previous_company IS NOT NULL))
+and (old.is_previous_company is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.work_id,
+(select employee_id from employee_details where work_id=old.work_id),
+'Work History : Previous Company',old.is_previous_company,new.is_previous_company,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.worked_from <> OLD.worked_from)
+OR (NEW.worked_from IS NOT NULL AND OLD.worked_from IS NULL)
+OR (NEW.worked_from IS NULL AND  OLD.worked_from IS NOT NULL))
+and (old.worked_from is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.work_id,
+(select employee_id from employee_details where work_id=old.work_id),
+'Work History : Worked From',old.worked_from,new.worked_from,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.worked_upto <> OLD.worked_upto)
+OR (NEW.worked_upto IS NOT NULL AND OLD.worked_upto IS NULL)
+OR (NEW.worked_upto IS NULL AND  OLD.worked_upto IS NOT NULL))
+and (old.worked_upto is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.work_id,
+(select employee_id from employee_details where work_id=old.work_id),
+'Work History : Worked To',old.worked_upto,new.worked_upto,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.is_active <> OLD.is_active)
+OR (NEW.is_active IS NOT NULL AND OLD.is_active IS NULL)
+OR (NEW.is_active IS NULL AND  OLD.is_active IS NOT NULL))
+and (old.is_active is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.work_id,
+(select employee_id from employee_details where work_id=old.work_id),
+'Work History : Is Active',old.is_active,new.is_active,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+END $$;
+
+
+

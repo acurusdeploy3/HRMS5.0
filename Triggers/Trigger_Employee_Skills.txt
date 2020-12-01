@@ -1,0 +1,72 @@
+DELIMITER $$
+CREATE TRIGGER triggerSkilldetails
+    AFTER UPDATE ON employee_skills
+    FOR EACH ROW
+BEGIN
+
+IF (((NEW.skill_desc <> OLD.skill_desc)
+OR (NEW.skill_desc IS NOT NULL AND OLD.skill_desc IS NULL)
+OR (NEW.skill_desc IS NULL AND  OLD.skill_desc IS NOT NULL))
+and (old.skill_desc is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.skill_id,
+(select employee_id from employee_skills where skill_id=old.skill_id),
+'Employee Skills :Skill Description',old.skill_desc,new.skill_desc,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.months_of_experience <> OLD.months_of_experience)
+OR (NEW.months_of_experience IS NOT NULL AND OLD.months_of_experience IS NULL)
+OR (NEW.months_of_experience IS NULL AND  OLD.months_of_experience IS NOT NULL))
+and (old.months_of_experience is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.skill_id,
+(select employee_id from employee_skills where skill_id=old.skill_id),
+'Employee Skills : Months of Experience',old.months_of_experience,new.months_of_experience,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.competency_level <> OLD.competency_level)
+OR (NEW.competency_level IS NOT NULL AND OLD.competency_level IS NULL)
+OR (NEW.competency_level IS NULL AND  OLD.competency_level IS NOT NULL))
+and (old.competency_level is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.skill_id,
+(select employee_id from employee_skills where skill_id=old.skill_id),
+'Employee Skills :Competency Level',old.competency_level,new.competency_level,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+
+IF (((NEW.year_last_used <> OLD.year_last_used)
+OR (NEW.year_last_used IS NOT NULL AND OLD.year_last_used IS NULL)
+OR (NEW.year_last_used IS NULL AND  OLD.year_last_used IS NOT NULL))
+and (old.year_last_used is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.skill_id,
+(select employee_id from employee_skills where skill_id=old.skill_id),
+'Employee Skills : Last Used',old.year_last_used,new.year_last_used,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+END $$;
+
+
+

@@ -1,0 +1,43 @@
+DELIMITER $$
+CREATE TRIGGER triggerresignationinsert
+    After Insert ON employee_resignation_information
+    FOR EACH ROW
+BEGIN
+
+Insert into audit  select 0,'Resignation Management',o.resignation_id,o.employee_id,'Process_Queue_Change',o.process_queue,'',o.created_by,
+now(),'insert',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()) from employee_resignation_information o where o.resignation_id not in (select distinct module_id from audit where description='Process_Queue_Change');
+
+Insert into audit  select 0,'Resignation Management',o.resignation_id,o.employee_id,'Resignation_Status_Change',o.status,'',o.created_by,
+now(),'insert',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()) from employee_resignation_information o where o.resignation_id not in (select distinct module_id from audit where description='Resignation_Status_Change');
+
+
+Insert into audit  select 0,'Resignation Management',o.resignation_id,o.employee_id,'Active_Status',o.is_active,'',o.created_by,
+now(),'insert',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()) from employee_resignation_information o where o.resignation_id not in (select distinct module_id from audit where description='Active_Status');
+
+
+
+Insert into audit  select 0,'Resignation Management',o.resignation_id,o.employee_id,'Date_Of_Leaving',o.Date_Of_Leaving,'',o.created_by,
+now(),'insert',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()) from employee_resignation_information o where o.resignation_id not in (select distinct module_id from audit where description='Date_Of_Leaving');
+
+Insert into fyi_transaction
+Select 0,r.employee_id,concat(First_name,' ',Last_Name) as name,
+concat(status,' - ',process_queue)
+,r.resignation_id,'Resignation Management',
+if(status='Cancel Resignation','Date of Cancellation',if(process_queue='HR_Manager_Process','Date of Leaving','Date of Submission of Resignation')),
+if(status='Cancel Resignation',date(date_of_cancellation_of_resignation),if(process_queue='HR_Manager_Process',date(date_of_leaving),date(date_of_submission_of_resignation))) as date,
+if(status='Resignation Request Sent',datediff(date(now()),date(r.created_date_and_time)),datediff(date(now()),date(r.modified_date_and_time))) as days,
+'Y',now(),'Acurus'
+from employee_resignation_information r
+inner join employee_details d on r.employee_id=d.employee_id
+where concat(r.resignation_id,status,' - ',process_queue)
+ not in (select distinct (concat(module_id,Transaction)) from fyi_transaction);
+
+END $$;

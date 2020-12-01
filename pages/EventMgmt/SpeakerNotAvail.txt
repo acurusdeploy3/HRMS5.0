@@ -1,0 +1,7 @@
+<div class="form-group">
+							<img alt='User' src='Images/keynote-speaker.png' align="center" style="width:7%; height: 7%; margin-left: auto;
+  margin-right: auto; display: block;" />
+  <h5 class="box-title" style="
+    text-align: center;
+">No Data Available</h5>
+						</div>

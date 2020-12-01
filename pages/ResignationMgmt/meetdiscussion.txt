@@ -1,0 +1,26 @@
+Form              ->  Table  -->  Hist_table
+
+Field 1                                 
+Field 2
+FIeld ..10
+
+					
+
+Save
+
+FIeld 11
+Field 12
+Field .. N
+
+Submit / Cancel  
+
+
+
+Trigger Function on Submit
+
+Pass Table name, current record id as parameters.
+
+Insert into Concat("Hist_"+Table_Name)
+
+
+Update table name, new values.

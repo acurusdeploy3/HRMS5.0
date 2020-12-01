@@ -1,0 +1,6 @@
+DirectoryIndex pages/forms/mainlogin.php
+Options -Indexes
+<IfModule mod_speling.c>
+    CheckCaseOnly on
+    CheckSpelling on
+</IfModule>

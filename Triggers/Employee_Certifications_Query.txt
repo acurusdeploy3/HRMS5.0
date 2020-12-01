@@ -1,0 +1,54 @@
+DELIMITER $$
+CREATE TRIGGER triggercertificationsdetails
+    AFTER UPDATE ON employee_certifications
+    FOR EACH ROW
+BEGIN
+
+IF (((NEW.course_name <> OLD.course_name)
+OR (NEW.course_name IS NOT NULL AND OLD.course_name IS NULL)
+OR (NEW.course_name IS NULL AND  OLD.course_name IS NOT NULL))
+and (old.course_name is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.certifications_id,
+(select employee_id from employee_certifications where certifications_id=old.certifications_id),
+'Certifications : Course Name',old.course_name,new.course_name,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.course_offered_by <> OLD.course_offered_by)
+OR (NEW.course_offered_by IS NOT NULL AND OLD.course_offered_by IS NULL)
+OR (NEW.course_offered_by IS NULL AND  OLD.course_offered_by IS NOT NULL))
+and (old.course_offered_by is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.certifications_id,
+(select employee_id from employee_certifications where certifications_id=old.certifications_id),
+'Certifications : Offered By',old.course_offered_by,new.course_offered_by,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+
+IF (((NEW.certification_name <> OLD.certification_name)
+OR (NEW.certification_name IS NOT NULL AND OLD.certification_name IS NULL)
+OR (NEW.certification_name IS NULL AND  OLD.certification_name IS NOT NULL))
+and (old.certification_name is not null))
+Then
+Insert into audit values
+(0,'Employee Details',old.certifications_id,
+(select employee_id from employee_certifications where certifications_id=old.certifications_id),
+'Certifications : Name',old.certification_name,new.certification_name,new.modified_by,
+now(),'update',(Select SUBSTRING_INDEX(host,':',1) as 'ip'
+ From information_schema.processlist
+ WHERE ID=connection_id()));
+END IF;
+
+END $$;
+
+
+
